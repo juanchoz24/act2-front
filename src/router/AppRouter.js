@@ -4,6 +4,7 @@ import { DefaultComponent } from "../components/DefaultComponent";
 import { Home } from "../components/Home";
 import { ConsultaApto } from "../components/ConsultaApartamento";
 import CrearApto from "../components/CrearApto";
+import EditarApto from "../components/EditarApto";
 
 export const AppRouter = () => {
     return (
@@ -13,6 +14,7 @@ export const AppRouter = () => {
                     <Route exact path ="/" element={<Home/>}/>
                     <Route exact path ="/apto/" element={<ConsultaApto/>}/>
                     <Route exact path ="/CrearApto/" element={<CrearApto/>}/>
+                    <Route path ="/EditarApto/:id" element={<EditarApto/>}/>
                     <Route path ="*" element={<DefaultComponent/>}/>
                 </Routes>
             </div>

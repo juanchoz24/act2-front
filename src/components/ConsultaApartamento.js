@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import swal from 'sweetalert2'
 const URI = 'http://localhost:8080/api/registro(v1)/buscartodos'
-const URI2 ='http://localhost:8080/api/registro(v1)/borrar/'
 
 export const ConsultaApto = (props) => {
 

@@ -68,7 +68,7 @@ export const CrearApto = () => {
 
   return (
     <div>
-
+      <br/>
       <div className="container col-5">
         <h3>Crear Apartamento</h3>
         <form onSubmit={Save}>
