@@ -2,32 +2,36 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert2";
+import { useForm } from "../hook/useForm";
 const URI = "http://localhost:8080/api/persona(v1)/save";
 
 
 
 export const CrearPersona = () => {
-  const [documento, setDocumento] = useState("");
-  const [tipoDocIDen, setTipoDocumento] = useState("");
-  const [nombres, setNombre] = useState("");
-  const [apellidos, setApellidos] = useState("");
-  const [fechaNacimiento, setFecha] = useState("");
-  const [email, setEmail] = useState("");
-  const [torre, setTorre] = useState("");
-  const [apartamento, setApartamento] = useState("");
+  
+  const [formData, handleChange, resetForm] = useForm({
+    documento: "",
+    tipoDocIDen: "",
+    nombres: "",
+    apellidos: "",
+    fechaNacimiento: "",
+    email:"",
+    torre:"",
+    apartamento:"",
+  });
 
   const navigate = useNavigate();
 
   const Save = async (event) => {
     event.preventDefault();
-  const fechaNacimientoInt = parseInt(fechaNacimiento, 10);
+  const fechaNacimientoInt = parseInt(formData.fechaNacimiento, 10);
   if (isNaN(fechaNacimientoInt)) {
-    swal.fire("Error", "El parqueadero debe ser un número entero válido", "error");
+    swal.fire("Error", "La fecha de nacimiento debe ser un número entero válido", "error");
     return;
   }
-  const apartamentoInt = parseInt(apartamento, 10);
+  const apartamentoInt = parseInt(formData.apartamento, 10);
   if (isNaN(apartamentoInt)) {
-    swal.fire("Error", "El parqueadero debe ser un número entero válido", "error");
+    swal.fire("Error", "El apartamento debe ser un número entero válido", "error");
     return;
   }
     try {
@@ -35,13 +39,13 @@ export const CrearPersona = () => {
         method: "POST", 
         url: URI,
         data: {
-            documento: documento,
-            tipoDocIDen: tipoDocIDen,  
-            nombres: nombres,
-            apellidos: apellidos,
+            documento: formData.documento,
+            tipoDocIDen: formData.tipoDocIDen,  
+            nombres: formData.nombres,
+            apellidos: formData.apellidos,
             fechaNacimiento: fechaNacimientoInt,
-            email: email,
-            torre:torre,
+            email: formData.email,
+            torre:formData.torre,
             apartamento:apartamentoInt 
         },
       });
@@ -88,17 +92,19 @@ export const CrearPersona = () => {
           <div className="mb-3">
             <label className="form-label">Documento</label>
             <input
-              value={documento}
-              onChange={(e) => setDocumento(e.target.value)}
-              type="text"
-              className="form-control"
+            name="documento"
+            value={formData.documento}
+            onChange={handleChange}
+            type="text"
+            className="form-control"
             />
           </div>
           <div className="mb-3">
             <label className="form-label">Tipo Documento</label>
             <input
-              value={tipoDocIDen}
-              onChange={(e) => setTipoDocumento(e.target.value)}
+              name="tipoDocIDen"
+              value={formData.tipoDocIDen}
+              onChange={handleChange}
               type="text"
               className="form-control"
             />
@@ -107,8 +113,10 @@ export const CrearPersona = () => {
           <div className="mb-3">
             <label className="form-label">Nombres</label>
             <input
-              value={nombres}
-              onChange={(e) => setNombre(e.target.value)}
+              name="nombres"
+              value={formData.nombres}
+              onChange={handleChange}
+              type="text"
               className="form-control"
             />
           </div>
@@ -116,8 +124,10 @@ export const CrearPersona = () => {
           <div className="mb-3">
             <label className="form-label">Apellidos</label>
             <input
-              value={apellidos}
-              onChange={(e) => setApellidos(e.target.value)}
+              name="apellidos"
+              value={formData.apellidos}
+              onChange={handleChange}
+              type="text"
               className="form-control"
             />
           </div>
@@ -125,32 +135,40 @@ export const CrearPersona = () => {
           <div className="mb-3">
             <label className="form-label">Fecha de nacimiento</label>
             <input
-              value={fechaNacimiento}
-              onChange={(e) => setFecha(e.target.value)}
+              name="fechaNacimiento"
+              value={formData.fechaNacimiento}
+              onChange={handleChange}
+              type="text"
               className="form-control"
             />
           </div>
           <div className="mb-3">
             <label className="form-label">Correo Electrónico</label>
             <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              type="text"
               className="form-control"
             />
           </div>
           <div className="mb-3">
             <label className="form-label">Torre</label>
             <input
-              value={torre}
-              onChange={(e) => setTorre(e.target.value)}
+               name="torre"
+               value={formData.torre}
+               onChange={handleChange}
+               type="text"
               className="form-control"
             />
           </div>
           <div className="mb-3">
             <label className="form-label">Apartamento</label>
             <input
-              value={apartamento}
-              onChange={(e) => setApartamento(e.target.value)}
+               name="apartamento"
+               value={formData.apartamento}
+               onChange={handleChange}
+               type="text"
               className="form-control"
             />
           </div>
@@ -161,6 +179,9 @@ export const CrearPersona = () => {
           </div>
           <button type="submit" className="btn btn-outline-primary">
             Guardar
+          </button>
+          <button type="button" className="btn btn-outline-secondary" onClick={resetForm}>
+            Resetear
           </button>
         </form>
         <div style={{ backgroundColor: 'white', height: '400px', marginTop: '20px' }}></div>
